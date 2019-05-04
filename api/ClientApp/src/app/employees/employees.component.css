@@ -1,0 +1,13 @@
+.container.card-container {
+  display: flex;
+  margin: 10px 0;
+}
+
+.mat-card {
+  margin-right: 10px;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: space-evenly;
+}

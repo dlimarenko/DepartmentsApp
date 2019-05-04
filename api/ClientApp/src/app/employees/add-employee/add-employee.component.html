@@ -1,0 +1,22 @@
+<h1>Add new employee</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="item.name" placeholder="Name" type="text" cdkFocusInitial required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="item.tel" placeholder="Mobile Number" type="number" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="item.email" placeholder="Email" type="email" required [email]="true" (keyup)="validateEmailOnDuplicate()">
+  </mat-form-field>
+  <div *ngIf="duplicatedEmail" class="warning">This email was already taken. Please, choose another one.</div>
+  <mat-form-field>
+    <input matInput [(ngModel)]="item.dateOfBirth" placeholder="Date of birth" type="date" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button matDialogClose>Cancel</button>
+  <button mat-button [mat-dialog-close]="item"
+          disabled="{{ !item.name || !item.email || !item.dateOfBirth || !item.tel || duplicatedEmail }}"
+          >Create</button>
+</div>

@@ -1,0 +1,20 @@
+<div class="container">
+  <div *ngFor="let d of departments; let i = index" class="item-container" appFocus tabindex="0">
+    <span>{{ d.name }}</span>
+    <div class="buttons-container">
+      <button mat-flat-button color="primary" (click)="viewEmployees(d)">View employees</button>
+      <button mat-flat-button color="warn" (click)="editDepartment(d)">edit</button>
+      <button mat-flat-button color="accent" (click)="deleteDepartment(d)">delete</button>
+    </div>
+  </div>
+
+  <button mat-raised-button (click)="addNewDep()">add new department</button>
+</div>
+
+
+<mat-paginator *ngIf="paginator && paginator.length && paginator.pageSize && paginator.pageIndex"
+               [length]="paginator.length"
+               [pageSize]="paginator.pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="paginationChange($event)">
+</mat-paginator>

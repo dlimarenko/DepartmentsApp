@@ -1,0 +1,19 @@
+<div>
+  <button mat-raised-button routerLink="/">Back to departments</button>
+</div>
+<div class="container card-container">
+  <mat-card *ngFor="let e of employeesList" class="item">
+    <mat-card-header>
+      <mat-card-title>name: {{ e.name }} </mat-card-title>
+      <mat-card-subtitle>date of birth: {{ e.dateOfBirth }}</mat-card-subtitle>
+      <mat-card-subtitle>email: {{ e.email }}</mat-card-subtitle>
+      <mat-card-subtitle>Mobile number: {{ e.tel }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-flat-button color="warn" (click)="editEmployee(e)">edit</button>
+      <button mat-flat-button color="accent" (click)="deleteEmployee(e)">delete</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<button mat-raised-button color="primary" (click)="addNewEmp()">add new employee</button>
+

@@ -1,0 +1,12 @@
+<h1>Change department data</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="name" type="text" cdkFocusInitial (keyup)="validateNameOnDuplicate()">
+  </mat-form-field>
+
+  <div *ngIf="duplicatedName" class="warning">This name was already taken. Please, choose another one.</div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button matDialogClose>Cancel</button>
+  <button mat-button [mat-dialog-close]="name" disabled="{{ !name || duplicatedName }}">Update</button>
+</div>
