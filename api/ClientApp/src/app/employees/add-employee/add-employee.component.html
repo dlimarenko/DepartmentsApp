@@ -4,7 +4,10 @@
     <input matInput [(ngModel)]="item.name" placeholder="Name" type="text" cdkFocusInitial required>
   </mat-form-field>
   <mat-form-field>
-    <input matInput [(ngModel)]="item.tel" placeholder="Mobile Number" type="number" required>
+    <input matInput [(ngModel)]="item.tel" placeholder="Mobile Number" type="tel" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="item.height" placeholder="Height(cm)" type="number" required min="1" max="250">
   </mat-form-field>
   <mat-form-field>
     <input matInput [(ngModel)]="item.email" placeholder="Email" type="email" required [email]="true" (keyup)="validateEmailOnDuplicate()">
@@ -17,6 +20,6 @@
 <div mat-dialog-actions>
   <button mat-button matDialogClose>Cancel</button>
   <button mat-button [mat-dialog-close]="item"
-          disabled="{{ !item.name || !item.email || !item.dateOfBirth || !item.tel || duplicatedEmail }}"
+          disabled="{{ !item.name || !item.email || !item.dateOfBirth || !item.height|| !item.tel || duplicatedEmail }}"
           >Create</button>
 </div>

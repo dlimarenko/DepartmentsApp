@@ -17,8 +17,7 @@ namespace api.Controllers
         {
             db = context;
         }
-
-        // GET: api/Departments
+        
         [HttpGet]
         public DepartmentsPage Get()
         {
@@ -28,36 +27,49 @@ namespace api.Controllers
                 PageIndex = 1,
                 PageSize = 5
             };
+
             return new DepartmentsPage(db.Departments.ToList(),paginator);
         }
-
-        // POST: api/Departments
+        
         [HttpPost]
         public IActionResult Post([FromBody] Department department)
         {
             if (ModelState.IsValid)
             {
-                db.Departments.Add(department);
-                db.SaveChanges();
-                return Ok(department);
+                if (db.Departments.Where(e => e.Name == department.Name).Count() == 0)
+                {
+                    department.isEmpty = true;
+                    db.Departments.Add(department);
+                    db.SaveChanges();
+                    return Ok(department);
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
             }
             return BadRequest(ModelState);
         }
-
-        // PUT: api/Departments/5
+        
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Department department)
         {
             if (ModelState.IsValid)
             {
-                db.Update(department);
-                db.SaveChanges();
-                return Ok(department);
+                if (db.Departments.Where(e => e.Name == department.Name).Count() == 0)
+                {
+                    db.Update(department);
+                    db.SaveChanges();
+                    return Ok(department);
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
             }
             return BadRequest(ModelState);
         }
-
-        // DELETE: api/ApiWithActions/5
+        
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

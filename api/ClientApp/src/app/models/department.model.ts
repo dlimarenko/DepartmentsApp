@@ -1,6 +1,7 @@
 export interface DepartmentItem {
   id: number,
-  name: string
+  name: string,
+  isEmpty: boolean
 }
 
 export interface DepartmentPage {

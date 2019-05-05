@@ -10,8 +10,8 @@ using api.Models;
 namespace api.Migrations
 {
     [DbContext(typeof(DepartmentContext))]
-    [Migration("20190503203541_App_Tables")]
-    partial class App_Tables
+    [Migration("20190505170022_newChange")]
+    partial class newChange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,8 @@ namespace api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
+
+                    b.Property<bool>("isEmpty");
 
                     b.HasKey("Id");
 

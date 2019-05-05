@@ -24,15 +24,29 @@ namespace api.Controllers
             return Ok(db.Employees.Where(e => e.DepId == depId).ToList());
         }
 
+        [HttpGet("")]
+        public IActionResult Get()
+        {
+            return Ok(db.Employees.ToList());
+        }
+
         [HttpPost("{depId}")]
         public IActionResult Post(int depId, [FromBody] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                employee.Department = db.Departments.Find(depId);
-                db.Employees.Add(employee);
-                db.SaveChanges();
-                return Ok(employee);
+                if (db.Employees.Where(e => e.Email == employee.Email).Count() == 0)
+                {
+                    employee.Department = db.Departments.Find(depId);
+                    db.Employees.Add(employee);
+                    employee.Department.isEmpty = false;
+                    db.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
             }
             return BadRequest(ModelState);
         }
@@ -42,9 +56,15 @@ namespace api.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Update(employee);
-                db.SaveChanges();
-                return Ok(employee);
+                if (db.Employees.Where(e => e.Email == employee.Email).Count() == 0)
+                {
+                    db.Update(employee);
+                    db.SaveChanges();
+                    return Ok(employee);
+                }
+                {
+                    return BadRequest(ModelState);
+                }
             }
             return BadRequest(ModelState);
         }
@@ -55,8 +75,15 @@ namespace api.Controllers
             Employee employee = db.Employees.FirstOrDefault(x => x.Id == id);
             if (employee != null)
             {
+                int depId = employee.DepId;
                 db.Employees.Remove(employee);
                 db.SaveChanges();
+                if (db.Employees.Where(e => e.DepId == depId).Count() == 0)
+                {
+                    employee.Department = db.Departments.Find(depId);
+                    employee.Department.isEmpty = true;
+                    db.SaveChanges();
+                }
             }
             return Ok();
         }

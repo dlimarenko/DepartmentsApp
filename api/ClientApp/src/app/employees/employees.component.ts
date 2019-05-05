@@ -14,6 +14,7 @@ import { EmployeeItem } from '../models/employee.model';
 export class EmployeesComponent implements OnInit {
 
   public employeesList: EmployeeItem[] = [];
+  public fullEmployeesList: EmployeeItem[] = [];
   private currentDepId: string;
   constructor(
     private employeesService: EmployeesService,
@@ -26,6 +27,7 @@ export class EmployeesComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.currentDepId = params['departmentId'];
       this.loadEmployees(this.currentDepId);
+      this.loadAllEmployees();
     });
   }
 
@@ -34,6 +36,7 @@ export class EmployeesComponent implements OnInit {
       width: '350px',
       data: {
         item,
+        fullEmployeesList: this.fullEmployeesList,
         employeesList: this.employeesList
       }
     });
@@ -49,23 +52,29 @@ export class EmployeesComponent implements OnInit {
     this.employeesService.deleteEmp(item.id).subscribe(() => this.loadEmployees(this.currentDepId));
   }
 
-  public addNewEmp(item) {
+  public addNewEmp() {
     const dialogRef = this.dialog.open(AddEmployeeComponent, {
       width: '350px',
       data: {
         employeesList: this.employeesList,
+        fullEmployeesList: this.fullEmployeesList,
         currentDepId: this.currentDepId
       },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.employeesService.addNewEmp(this.currentDepId, result).subscribe(() => this.loadEmployees(this.currentDepId));
+        this.employeesService.addNewEmp(this.currentDepId, result).subscribe(() =>
+          this.loadEmployees(this.currentDepId));
       }
      });
   }
 
   private loadEmployees(id) {
     this.employeesService.getEmployees(id).subscribe(data => this.employeesList = <EmployeeItem[]>data);
+  }
+
+  private loadAllEmployees() {
+    this.employeesService.getAllEmployees().subscribe(data => this.fullEmployeesList = <EmployeeItem[]>data);
   }
 }

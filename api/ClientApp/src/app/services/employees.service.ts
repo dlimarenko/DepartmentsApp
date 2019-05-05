@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, concat } from 'rxjs';
 
 import { EmployeeItem } from '../models/employee.model';
 
@@ -19,13 +19,16 @@ export class EmployeesService {
   };
 
   public getEmployees(depId){
-    //return of([])
-    //return this.http.get('api / departments /' + id + '/employees');
     return this.http.get(this.url + '/' + depId);
   }
 
+  public getAllEmployees() {
+    return this.http.get(this.url);
+  }
+
   public addNewEmp(depId, newEmployee) {
-    return this.http.post(this.url + "/" + depId, newEmployee, this.httpOptions);
+    console.log(newEmployee);
+    return this.http.post(this.url + "/" + depId, newEmployee);
   }
 
   public deleteEmp(empId) {

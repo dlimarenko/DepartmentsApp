@@ -9,6 +9,7 @@ namespace api.Models
     {
         public int Id { get; set;}
         public string Name { get; set; }
+        public bool isEmpty { get; set; }
 
         public ICollection<Employee> Employees { get; set; }
 

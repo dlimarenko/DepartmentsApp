@@ -43,7 +43,11 @@ export class DepartmentComponent implements OnInit {
   }
 
   public deleteDepartment(item) {
-    this.departService.deleteDep(item.id).subscribe(() => this.loadDepartments());
+    if (item.isEmpty) {
+      this.departService.deleteDep(item.id).subscribe(() => this.loadDepartments());
+    } else {
+      alert("Department is not empty, you can't delete it!");
+    }    
   }
 
   public viewEmployees(item) {

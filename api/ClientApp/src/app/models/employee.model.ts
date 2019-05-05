@@ -3,6 +3,7 @@ export interface EmployeeItem {
   name: string,
   email: string,
   tel: number,
+  height: number,
   dateOfBirth: string,
   depId: string,
 }

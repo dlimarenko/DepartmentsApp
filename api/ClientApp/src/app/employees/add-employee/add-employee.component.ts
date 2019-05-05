@@ -25,12 +25,14 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   public validateEmailOnDuplicate() {
-    for (let i = 0; i < this.data.employeesList.length; i++) {
-      if (this.data.employeesList[i].email === this.item.email) {
-        this.duplicatedEmail = true;
-        return
-      } else {
-        this.duplicatedEmail = false;
+    if (this.data.fullEmployeesList && this.data.fullEmployeesList.length) {
+      for (let i = 0; i < this.data.fullEmployeesList.length; i++) {
+        if (this.data.fullEmployeesList[i].email === this.item.email) {
+          this.duplicatedEmail = true;
+          return
+        } else {
+          this.duplicatedEmail = false;
+        }
       }
     };
   }

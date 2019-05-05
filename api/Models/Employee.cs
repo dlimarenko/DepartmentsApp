@@ -11,6 +11,7 @@ namespace api.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public int Tel { get; set; }
+        public int Height { get; set; }
         public string DateOfBirth { get; set; }
         public int DepId { get; set; }
 

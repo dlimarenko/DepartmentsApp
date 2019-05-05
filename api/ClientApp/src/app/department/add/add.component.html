@@ -1,7 +1,7 @@
 <h1>Add new department</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <input matInput [(ngModel)]="name" type="text" (keyup)="validateNameOnDuplicate()">
+    <input matInput [(ngModel)]="name" type="text" (keyup)="validateNameOnDuplicate()" cdkFocusInitial>
   </mat-form-field>
   <div *ngIf="duplicatedName" class="warning">This name was already taken. Please, choose another one.</div>
 </div>
