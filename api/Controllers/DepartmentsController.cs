@@ -17,20 +17,26 @@ namespace api.Controllers
         {
             db = context;
         }
-        
-        [HttpGet]
-        public DepartmentsPage Get()
-        {
-            Paginator paginator = new Paginator()
-            {
-                Length = db.Departments.Count(),
-                PageIndex = 1,
-                PageSize = 5
-            };
 
-            return new DepartmentsPage(db.Departments.ToList(),paginator);
+        [HttpGet]
+        public DepartmentsPage Get([FromQuery] Paginator paginator)
+        {
+            if (paginator.PageSize == 0)
+                paginator = new Paginator()
+                {
+                    Length = db.Departments.Count(),
+                    PageIndex = 0,
+                    PageSize = 5
+                };
+
+            var departments = db.Departments
+                .Skip(paginator.PageSize * paginator.PageIndex)
+                .Take(paginator.PageSize)
+                .ToList();
+
+            return new DepartmentsPage(departments, paginator);
         }
-        
+
         [HttpPost]
         public IActionResult Post([FromBody] Department department)
         {
@@ -50,7 +56,7 @@ namespace api.Controllers
             }
             return BadRequest(ModelState);
         }
-        
+
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Department department)
         {
@@ -69,7 +75,7 @@ namespace api.Controllers
             }
             return BadRequest(ModelState);
         }
-        
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
